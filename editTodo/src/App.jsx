@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 import TodoForm from "./components/TodoForm";
-import AllTodo from "./AllTodo";
+import AllTodo from "./components/AllTodo";
 
 function App() {
   const [todo, setTodo] = useState(""); // this is for every task i.e single todo

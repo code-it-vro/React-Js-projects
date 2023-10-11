@@ -18,6 +18,80 @@
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
+.todo_form input button{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+input{
+  font-size: 2rem;
+  border-radius: 1rem;
+  border-style: none;
+  outline: none;
+}
+button{
+  font-size: 2rem;
+  border-radius: 1rem;
+}
+.allTodos {
+  list-style: none;
+  padding: 0;
+}
+
+.singleTodo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 2rem;
+  padding: 10px;
+  margin: 5px 0;
+}
+
+.todoText {
+  flex: 1;
+  font-size: 1.8rem;
+}
+.container{
+  border: 1px solid #ddd;
+  padding: 1rem;
+  border-radius: 2rem;
+
+}
+button {
+  background-color: #007BFF;
+  border-style: none;
+  outline: none;
+  color: #fff;
+  border: none;
+  border-radius: 2rem;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+button:hover {
+  background-color: #0056b3;
+  /* Hover background color */
+}
+
+button.edit {
+  background-color: #28a745;
+  /* Edit button background color */
+}
+
+button.delete {
+  background-color: #dc3545;
+  /* Delete button background color */
+}
+
+
+button {
+  margin-left: 10px;
+  /* Add some spacing between the buttons and the text */
+}
+
+
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);
