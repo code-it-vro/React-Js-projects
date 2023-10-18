@@ -1,8 +1,7 @@
-// import async from "hbs/lib/async.js";
 import conf from "../conf/conf.js";
-import { Client, Account, Id, ID } from "appwrite";
+import { Client, Account, ID } from "appwrite";
 
-export class AuthServices {
+export class AuthService {
   client = new Client();
   account;
 
@@ -22,6 +21,7 @@ export class AuthServices {
         name
       );
       if (userAccount) {
+        // call another method
         return this.login({ email, password });
       } else {
         return userAccount;
@@ -41,10 +41,11 @@ export class AuthServices {
 
   async getCurrentUser() {
     try {
-      await this.account.get(); // this is the predefinded appwrite functionality to check users
+      return await this.account.get();
     } catch (error) {
-      console.log("Appwrite services :: getCurrentUser :: error", error);
+      console.log("Appwrite serive :: getCurrentUser :: error", error);
     }
+
     return null;
   }
 
@@ -52,11 +53,11 @@ export class AuthServices {
     try {
       await this.account.deleteSessions();
     } catch (error) {
-      console.log("Appwrite services :: getCurrentUser :: error", error);
+      console.log("Appwrite serive :: logout :: error", error);
     }
   }
 }
 
-const authServices = new AuthServices();
+const authService = new AuthService();
 
-export default authServices;
+export default authService;

@@ -1,5 +1,5 @@
 import conf from "../conf/conf.js";
-import { Client, Account, Id, ID, Storage, Query, Databases } from "appwrite";
+import { Client, ID, Storage, Query, Databases } from "appwrite";
 
 export class Service {
   client = new Client();
@@ -29,7 +29,7 @@ export class Service {
         }
       );
     } catch (error) {
-      console.log("Appwrite services :: getCurrentUser :: error", error);
+      console.log("Appwrite service :: createPost :: error", error);
     }
   }
 
@@ -47,7 +47,7 @@ export class Service {
         }
       );
     } catch (error) {
-      console.log("Appwrite services :: getCurrentUser :: error", error);
+      console.log("Appwrite services :: updatePost :: error", error);
     }
   }
 
@@ -60,7 +60,7 @@ export class Service {
       );
       return true;
     } catch (error) {
-      console.log("Appwrite services :: getCurrentUser :: error", error);
+      console.log("Appwrite services :: deletePost :: error", error);
       return false;
     }
   }
@@ -72,7 +72,7 @@ export class Service {
         slug
       );
     } catch (error) {
-      console.log("Appwrite services :: getCurrentUser :: error", error);
+      console.log("Appwrite services :: getPost :: error", error);
       return false;
     }
   }
@@ -84,10 +84,13 @@ export class Service {
         queries
       );
     } catch (error) {
-      console.log("Appwrite services :: getCurrentUser :: error", error);
+      console.log("Appwrite services :: getPost :: error", error);
       return false;
     }
   }
+
+// file upload services
+
   async uploadFile(file) {
     try {
       return await this.bucket.craeatFile(
@@ -96,7 +99,7 @@ export class Service {
         file
       );
     } catch (error) {
-      console.log("Appwrite services :: getCurrentUser :: error", error);
+      console.log("Appwrite services :: uploadFile :: error", error);
       return false;
     }
   }
@@ -105,7 +108,7 @@ export class Service {
       await this.bucket.deleteFile(conf.appwriteBucketId, fileId);
       return true;
     } catch (error) {
-      console.log("Appwrite services :: getCurrentUser :: error", error);
+      console.log("Appwrite services :: deleteFile :: error", error);
       return false;
     }
   }
