@@ -5,7 +5,7 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
 import { FaCamera } from "react-icons/fa";
-import { useNavigate ,Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const SignUp = () => {
   const [err, setErr] = useState(false);
@@ -49,7 +49,6 @@ const SignUp = () => {
             await setDoc(doc(db, "userChats", res.user.uid), {});
             navigate("/");
           } catch (err) {
-         
             setErr(true);
             setLoading(false);
           }
@@ -59,10 +58,6 @@ const SignUp = () => {
       setErr(true);
       setLoading(false);
     }
-  };
-
-  const handleLogin = () => {
-    navigate("/login");
   };
 
   return (

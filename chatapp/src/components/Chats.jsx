@@ -1,53 +1,58 @@
-import React from "react";
+import { db } from "../firebaseconfig";
+import { doc, onSnapshot } from "firebase/firestore";
+import React, { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../context/AuthContext";
+import { ChatContext } from "../context/ChatContext";
 
 const Chats = () => {
+  const [chats, setChats] = useState([]);
+
+  const { currentUser } = useContext(AuthContext);
+  const { dispatch } = useContext(ChatContext);
+
+  useEffect(() => {
+    const getChats = () => {
+      const unsub = onSnapshot(doc(db, "userChats", currentUser.uid), (doc) => {
+        setChats(doc.data());
+      });
+
+      return () => {
+        unsub();
+      };
+    };
+    currentUser.uid && getChats();
+  }, [currentUser.uid]);
+
+  const handleSelect = (u) => {
+    dispatch({ type: "CHANGE_USER", payload: u });
+  };
+
   return (
     <>
       <div>
-        <div className="bg-slate-600 hover:bg-slate-700 hover:ease-in-out duration-300 text-white flex items-center gap-3 pl-1 py-1">
-          <img
-            className=" w-10 h-10 md:w-14 md:h-14 object-cover rounded-full"
-            src="https://images.pexels.com/photos/16304368/pexels-photo-16304368/free-photo-of-nike-off-white-jordan-1-university-blue.jpeg?auto=compress&cs=tinysrgb&w=600"
-            alt="ashu"
-          />
-          <div>
-            <span className="text-lg font-medium">shukla</span>
-            <p className="text-xs pl-1 text-gray-300">messages</p>
-          </div>
-        </div>
-        <div className="bg-slate-600 hover:bg-slate-700 hover:ease-in-out duration-300 text-white flex items-center gap-3 pl-1 py-1">
-          <img
-            className=" w-10 h-10 md:w-14 md:h-14  object-cover rounded-full"
-            src="https://images.pexels.com/photos/16304368/pexels-photo-16304368/free-photo-of-nike-off-white-jordan-1-university-blue.jpeg?auto=compress&cs=tinysrgb&w=600"
-            alt="ashu"
-          />
-          <div>
-            <span className="text-lg font-medium">shukla</span>
-            <p className="text-xs pl-1 text-gray-300">messages</p>
-          </div>
-        </div>
-        <div className="bg-slate-600 hover:bg-slate-700 hover:ease-in-out duration-300 text-white flex items-center gap-3 pl-1 py-1">
-          <img
-            className=" w-10 h-10 md:w-14 md:h-14 object-cover rounded-full"
-            src="https://images.pexels.com/photos/16304368/pexels-photo-16304368/free-photo-of-nike-off-white-jordan-1-university-blue.jpeg?auto=compress&cs=tinysrgb&w=600"
-            alt="ashu"
-          />
-          <div>
-            <span className="text-lg font-medium">shukla</span>
-            <p className="text-xs pl-1 text-gray-300">messages</p>
-          </div>
-        </div>
-        <div className="bg-slate-600 hover:bg-slate-700 hover:ease-in-out duration-300 text-white flex items-center gap-3 pl-1 py-1">
-          <img
-            className=" w-10 h-10 md:w-14 md:h-14  object-cover rounded-full"
-            src="https://images.pexels.com/photos/16304368/pexels-photo-16304368/free-photo-of-nike-off-white-jordan-1-university-blue.jpeg?auto=compress&cs=tinysrgb&w=600"
-            alt="ashu"
-          />
-          <div>
-            <span className="text-lg font-medium">shukla</span>
-            <p className="text-xs pl-1 text-gray-300">messages</p>
-          </div>
-        </div>
+        {Object.entries(chats)
+          ?.sort((a, b) => b[1].date - a[1].date)
+          .map((chat) => (
+            <div
+              className="bg-slate-600 hover:bg-slate-700 hover:ease-in-out duration-300 cursor-pointer text-white flex items-center gap-3 pl-1 py-1"
+              key={chat[0]}
+              onClick={() => handleSelect(chat[1].userInfo)}
+            >
+              <img
+                className=" w-10 h-10 md:w-14 md:h-14 object-cover rounded-full"
+                src={chat[1].userInfo.photoURL}
+                alt="ashu"
+              />
+              <div>
+                <span className="text-lg font-medium">
+                  {chat[1].userInfo.displayName}
+                </span>
+                <p className="text-xs pl-1 text-gray-300">
+                  {chat[1].lastMessage?.text}
+                </p>
+              </div>
+            </div>
+          ))}
       </div>
     </>
   );

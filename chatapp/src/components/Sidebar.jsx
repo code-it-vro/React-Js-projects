@@ -9,7 +9,7 @@ const Sidebar = () => {
       <div className="w-1/3 bg-slate-600  overflow-hidden ">
         <Navbar />
         <Search />
-        <Chats/>
+        <Chats />
       </div>
     </>
   );

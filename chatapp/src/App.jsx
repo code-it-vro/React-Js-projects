@@ -5,19 +5,24 @@ import Login from "./pages/Login";
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
 
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 
-function App (){
-  const ProtectedRoute = ({ children }) => {
-      const { currentUser } = useContext(AuthContext);
-
-      if (!currentUser) {
-        return <Navigate to="/login" />;
-      }
-
-      return children;
-    };
+function App() {
+  const { currentUser } = useContext(AuthContext);
   
+  const ProtectedRoute = ({ children }) => {
+    if (!currentUser) {
+      return <Navigate to="/login" />;
+    }
+
+    return children;
+  };
+
   return (
     <Router>
       <Routes>
@@ -36,6 +41,6 @@ function App (){
       </Routes>
     </Router>
   );
-};
+}
 
 export default App;
